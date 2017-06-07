@@ -367,7 +367,6 @@ function ButtonSelectedAdminMenu(button)
 		elseif btn == "Spawn véhicule" then
 		    DisplayOnscreenKeyboard(true, "FMMC_KEY_TIP8", "", "", "", "", "", 120)
 			ShowNotificationMenuAdmin2("~b~Entrez le nom du véhicule")
-			spawnVehicle()
 			inputvehicle = 1
 			CloseCreatoradminmenu()
 		elseif btn == "Flip véhicule" then
@@ -747,28 +746,27 @@ Citizen.CreateThread(function()
 			end
 		end
 		if inputvehicle == 2 then
-		local vehicle = GetOnscreenKeyboardResult()
+		local vehicleidd = GetOnscreenKeyboardResult()
 
-            local mhash = GetHashKey(vehicle)
-
-            local i = 0
-            while not HasModelLoaded(mhash) and i < 10000 do
-              RequestModel(mhash)
-              Citizen.Wait(10)
-              i = i+1
-            end
-
-            -- spawn car
-            if HasModelLoaded(mhash) then
-              local x,y,z = getPosition()
-              local nveh = CreateVehicle(mhash, x,y,z+0.5, 0.0, true, false)
-              SetVehicleOnGroundProperly(nveh)
-              SetEntityInvincible(nveh,false)
-              SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1) -- met le joueur a l'interieur
-	          Citizen.InvokeNative(0xAD738C3085FE7E11, nveh, true, true)
-
-              SetModelAsNoLongerNeeded(mhash)
-            end
+				local car = GetHashKey(vehicleidd)
+				
+				Citizen.CreateThread(function()
+					Citizen.Wait(10)
+					RequestModel(car)
+					while not HasModelLoaded(car) do
+						Citizen.Wait(0)
+					end
+                    local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+					veh = CreateVehicle(car, x,y,z, 0.0, true, false)
+					SetEntityVelocity(veh, 2000)
+					SetVehicleOnGroundProperly(veh)
+					SetVehicleHasBeenOwnedByPlayer(veh,true)
+					local id = NetworkGetNetworkIdFromEntity(veh)
+					SetNetworkIdCanMigrate(id, true)
+					SetVehRadioStation(veh, "OFF")
+					SetPedIntoVehicle(GetPlayerPed(-1),  veh,  -1)
+					Notify("Véhicule spawn, bonne route")
+				end)
 		
         inputvehicle = 0
 		end
