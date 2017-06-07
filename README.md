@@ -20,6 +20,7 @@ An admin menu for LaLife Open Source - https://github.com/ldlac/La_LifeRP/
 - Drag the folder in your resources
 - add "- admin_menu" in your citmp-server
 - Launch your server
+- Press F1 for open the Menu (you need to be admin/superadmin
 
 ## Thanks
 
