@@ -46,7 +46,7 @@ local adminmenu = {
 			buttons = { 
 				{name = "Spawn véhicule", description = ''}, -- A faire
 				{name = "Réparer véhiucle", description = ''}, -- A faire
-				{name = "Retourner/Flip véhicule", description = ''}, -- A faire
+				{name = "Flip véhicule", description = ''}, -- A faire
 				-- {name = "Goto", description = ''}, -- A faire
 				-- {name = "Teleporter", description = ''}, -- A faire
 				-- {name = "Teleporter a une Position", description = ''}, -- A faire
@@ -213,7 +213,7 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if User.permission_level = 4 and IsControlJustPressed(1,288) then
+		if User.permission_level == 4 and IsControlJustPressed(1,288) then
 		  -- if IsPedInAnyVehicle(LocalPed(), true) == false then
 		  if (inmenuinv == 0) and (inmenujob == 0) then
 			if adminmenu.opened then
@@ -306,8 +306,7 @@ function ButtonSelectedAdminMenu(button)
 	local ped = GetPlayerPed(-1)
 	local this = adminmenu.currentmenu
 	local btn = button.name
-	posdepmenu = GetEntityCoords(GetPlayerPed(-1))
-	carTargetDep = GetClosestVehicle(posdepmenu['x'], posdepmenu['y'], posdepmenu['z'], 10.0,0,70)
+
 	
 	if this == "main" then
 	    if btn == "Fonctions Joueurs" then
@@ -362,7 +361,7 @@ function ButtonSelectedAdminMenu(button)
 		elseif btn == "Invisible" then
 		    InvisibleON()
 		end
-	elseif this == "mainadmin" then
+	elseif this == "mainvehicule" then
 	    if btn == "Réparer véhicule" then
 		    repairVehicle()
 		elseif btn == "Spawn véhicule" then
@@ -371,13 +370,8 @@ function ButtonSelectedAdminMenu(button)
 			spawnVehicle()
 			inputvehicle = 1
 			CloseCreatoradminmenu()
-		elseif btn == "Retourner/Flip véhicule"
-		local playerCoords = GetEntityCoords(GetPlayerPed(-1))
-            playerCoords = playerCoords + vector3(0, 2, 0)
-			
-			SetEntityCoords(carTargetDep, playerCoords)
-			
-		    ShowNotificationMenuAdmin2("~h~Vous avez ~g~Flip ~w~le véhicule")
+		elseif btn == "Flip véhicule" then
+            flipVehicle()
 		end
 	end
 end
@@ -780,3 +774,23 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+
+-- flipVehicle
+
+function flipVehicle()
+
+    local player = GetPlayerPed(-1)
+    posdepmenu = GetEntityCoords(player)
+    carTargetDep = GetClosestVehicle(posdepmenu['x'], posdepmenu['y'], posdepmenu['z'], 10.0,0,70)
+	if carTargetDep ~= nil then
+			platecarTargetDep = GetVehicleNumberPlateText(carTargetDep)
+	end
+    local playerCoords = GetEntityCoords(GetPlayerPed(-1))
+    playerCoords = playerCoords + vector3(0, 2, 0)
+	
+	SetEntityCoords(carTargetDep, playerCoords)
+	
+	Notify("Voiture retourné")
+
+end
