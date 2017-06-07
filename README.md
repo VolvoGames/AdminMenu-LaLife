@@ -1,6 +1,6 @@
 # AdminMenu for LaLife - BETA
 
-A admin menu for LaLife Open Source - https://github.com/ldlac/La_LifeRP/
+An admin menu for LaLife Open Source - https://github.com/ldlac/La_LifeRP/
 
 # La Life RP
 
