@@ -5,7 +5,8 @@ A admin menu for LaLife Open Source - https://github.com/ldlac/La_LifeRP/
 # La Life RP
 
 [Discord](https://discord.gg/aiekillu)
-Pour le support sur le scripting de FiveM en général.
+
+[GitHub](https://github.com/ldlac/La_LifeRP)
 
 [Twitter](https://twitter.com/Lalife_rp)
 
