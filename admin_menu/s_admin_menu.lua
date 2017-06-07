@@ -7,8 +7,6 @@ AddEventHandler("AdminMenu:giveCash", function(cash)
 	end)
 end)
 
-TriggerServerEvent('KickEvent')
-
 RegisterServerEvent("KickEvent")
 AddEventHandler("KickEvent", function(kickid)
     local source = GetPlayerFromServerId(tonumber(kickid))

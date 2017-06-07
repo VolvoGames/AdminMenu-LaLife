@@ -213,7 +213,7 @@ local backlock = false
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		if User.group == "superadmin" or User.group == "admin" and IsControlJustPressed(1,288) then
+		if User.permission_level = 4 and IsControlJustPressed(1,288) then
 		  -- if IsPedInAnyVehicle(LocalPed(), true) == false then
 		  if (inmenuinv == 0) and (inmenujob == 0) then
 			if adminmenu.opened then
@@ -306,10 +306,8 @@ function ButtonSelectedAdminMenu(button)
 	local ped = GetPlayerPed(-1)
 	local this = adminmenu.currentmenu
 	local btn = button.name
+	posdepmenu = GetEntityCoords(GetPlayerPed(-1))
 	carTargetDep = GetClosestVehicle(posdepmenu['x'], posdepmenu['y'], posdepmenu['z'], 10.0,0,70)
-	if carTargetDep ~=nil then
-			platecarTargetDep = GetVehicleNumberPlateText(carTargetDep)
-	end
 	
 	if this == "main" then
 	    if btn == "Fonctions Joueurs" then
